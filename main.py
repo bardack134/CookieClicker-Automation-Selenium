@@ -50,7 +50,7 @@ try:
     lenguaje.click()
     
     
-    # espero 5 segundos a que carge la pagina kun
+    # espero 5 segundos a que carge la pagina chan
     sleep(5)
     
     
@@ -69,7 +69,7 @@ except Exception as err:
 
 else:
              
-    #cada 5 segundos vamos a chequiar la tienda para los upgrades que estan disponibles
+    #cada 5 segundos vamos a chequiar la tienda para los upgrades que estan disponibles, time.time() da los segundos en UTC
     check_time=time.time() + 5     
     
     
@@ -77,7 +77,6 @@ else:
     five_min = time.time() + 60*5  # 5 minutes
     
     
-    # si el boton cookie fue encontrado
     while True:
         
         #cada 0.05 segundos se hara click a la galleta
@@ -90,8 +89,7 @@ else:
         
         now_time=time.time()
         
-        
-        
+         
         #chequiamos si el tiempo actual "esta en segundos UTC"  es mayor que nuestro check_time, que es el tiempo que determinamos para mirar los upgrades
         if  now_time> check_time:
      
