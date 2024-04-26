@@ -73,6 +73,10 @@ else:
     check_time=time.time() + 5     
     
     
+    #despues de 5 minutos paramos el script y miramos coockies per second count
+    five_min = time.time() + 60*5  # 5 minutes
+    
+    
     # si el boton cookie fue encontrado
     while True:
         
@@ -204,5 +208,9 @@ else:
             
             
         #despues de 5 minutos imprimios paramos el script y chequiamos el cookies per secound count    
-            
-            
+        if time.time() > five_min:    
+            cookie_per_s = driver.find_element(by=By.ID, value="cookiesPerSecond").text
+            print(f'cookies per second= {cookie_per_s}')
+            break
+        
+        
