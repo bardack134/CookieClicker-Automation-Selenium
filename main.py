@@ -90,9 +90,7 @@ else:
         
         #chequiamos si el tiempo actual "esta en segundos UTC"  es mayor que nuestro check_time, que es el tiempo que determinamos para mirar los upgrades
         if  now_time> check_time:
-            print('prueba')
-            
-            
+     
             
             try:
                 #NOTE:chequiamos la cantidad de monedas actuales
@@ -148,56 +146,63 @@ else:
                         price_items_list.append(price_item)
                         
                         
-                    print(f"longitud lista 'price_items_list': {len(price_items_list)}")
+                    # print(f"longitud lista 'price_items_list': {len(price_items_list)}")
                     
-                    
-                    #lista donde guardaremos los precios de los elementos 
-                    price_list=[]
-                    
-                    
-                    #obteniendo el precio de los elementos encontrados en price_items_list
-                    for item in price_items_list:
-                        
-                        #tomamos el texto del elemento html que viene siendo el precio y le quitamos la coma
-                        price=item.text.replace(',', '')
-                        
-                        
-                        #puede pasar que price este vacio alintentar convertilo a entero, entonces genera error
-                        try:
-                            price_list.append(int(price))
-                    
-
-                        except:
-                            pass
-                    print(price_list)
-                         
                     
                 except Exception as err:
 
                     # Imprimir un mensaje de error si ocurre una excepción
-                    print(f"the element 'price_item' was not found: {err}")                          
-    
-        
-                #NOTE*: de los precios de los productos disponibles, buscaremos el mas caro
-                if len(price_list)!=0:
+                    print(f"the element 'price_item' was not found: {err}")                      
+                
+                
+                #lista donde guardaremos los precios de los elementos 
+                price_list=[]
+                
+                
+                #obteniendo el precio de los elementos encontrados en price_items_list
+                for item in price_items_list:
                     
-                    #precio mas alto dentro de nuestra lista de precios
-                    max_price=max(price_list)
+                    #tomamos el texto del elemento html que viene siendo el precio y le quitamos la coma
+                    price=item.text.replace(',', '')
+                    
+                    
+                    #puede pasar que price este vacio alintentar convertilo a entero, entonces genera error
+                    try:
+                        price_list.append(int(price))
                 
 
-                    #obtenemos el indice dentro de la lista relacionado a ese precio maximo
-                    max_price_indice=price_list.index(max_price)
+                    except:
+                        pass
                     
+                # print(price_list)                 
+
+    
+            #NOTE*: de los precios de los productos disponibles, buscaremos el mas caro
+            if len(price_list)!=0:
+                
+                #precio mas alto dentro de nuestra lista de precios
+                max_price=max(price_list)
+            
+
+                #obtenemos el indice dentro de la lista relacionado a ese precio maximo
+                max_price_indice=price_list.index(max_price)
+                
+                
+                #el indice del precio maximo en la lista de precios, viene siendo el mismo indice en la lista padre que es update_items
+                max_price_update_items=update_items[max_price_indice]
+                
+                
+                #hacemos click en esa actualizacion que viene siendo la mas cara
+                max_price_update_items.click()
+                
+                
+                print(f"the most expencive upgrate selected is :  {max_price_update_items.text}")
+                
                     
-                    #el indice del precio maximo en la lista de precios, viene siendo el mismo indice en la lista padre que es update_items
-                    max_price_update_items=update_items[max_price_indice]
-                    
-                    
-                    #hacemos click en esa actualizacion que viene siendo la mas cara
-                    max_price_update_items.click()
-                    
-                    print(f"the most expencive upgrate selected is :  {max_price_update_items.text}")
-                    
-                    
-        else:
-            print("the is not bigger than check time")
+            #NOTE: actualizamos el tiempo "check time", es decir volvemos a chequiar dentro de 5 segundos
+            check_time=time.time() + 5  
+            
+            
+        #despues de 5 minutos imprimios paramos el script y chequiamos el cookies per secound count    
+            
+            
